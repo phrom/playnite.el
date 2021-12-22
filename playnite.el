@@ -20,7 +20,7 @@
 ;;; Code:
 (require 'org)
 (require 'org-roam)
-(require 'hltb-org)
+(require 'hltb)
 
 (cl-defstruct playnite-game
   name source playtime is-installed game-id id)
