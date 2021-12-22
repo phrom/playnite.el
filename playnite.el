@@ -29,7 +29,7 @@
   (interactive "ffilename: ")
   (let ((result nil))
     (with-temp-buffer
-      (insert-file filename)
+      (insert-file-contents filename)
       (forward-line 2)
       (while (not (eobp))
         (let* ((start (point))
@@ -53,9 +53,6 @@
         (format "[[steam:%s][%s]]" (playnite-game-game-id game) name)
       (format "[[playnite:%s][%s]]" (playnite-game-id game) name))))
 
-(setq playnite (playnite-load-csv "~/playnite.csv"))
-(playnite-org-make-link (car playnite))
-
 (defun playnite-org-insert (game)
   (if-let ((id (hltb-org-roam-find-id (playnite-game-name game))))
       (error "Game already present")
@@ -70,7 +67,7 @@
         org-roam-directory))
       (org-id-get-create)
       (org-set-property "CATEGORY" "games")
-      (condition-case err
+      (condition-case _
           (hltb-org-fill-properties)
         (error (message "%s not found in HLTB" (playnite-game-name game))))
       (save-buffer)
